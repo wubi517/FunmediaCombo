@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.masterwok:libvlc-android-sdk:3.0.13@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/046e2cd2c7ce8cea3a7b14b6696efde3/jetified-libvlc-android-sdk-3.0.13/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/046e2cd2c7ce8cea3a7b14b6696efde3/jetified-libvlc-android-sdk-3.0.13/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

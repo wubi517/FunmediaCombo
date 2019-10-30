@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background1"
+    android:orientation="vertical"
+    android:paddingLeft="100sp"
+    android:paddingRight="100sp"
+    android:paddingBottom="30sp"
+    android:paddingTop="30sp"
+    tools:context=".activity.SingUp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign up"
+        android:textColor="@color/welcome_color"
+        android:textSize="20sp"
+        android:layout_gravity="center"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/roundwhite">
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Name"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:paddingLeft="8dp"
+            android:lines="1"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/roundwhite"
+        android:layout_marginTop="15dp">
+
+        <EditText
+            android:id="@+id/mail"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="E-mail"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:paddingLeft="8dp"
+            android:lines="1"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <Spinner
+        android:background="@drawable/roundwhite"
+        android:id="@+id/spinner"
+        android:layout_marginTop="15dp"
+        android:drawSelectorOnTop="true"
+        tools:listitem="@android:layout/simple_spinner_item"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+    </Spinner>
+
+    <Button
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/send_btn"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:textSize="20dp"
+        android:textColor="@color/white"
+        android:text="Send"
+        android:textAllCaps="false"
+        android:background="@drawable/btn_drawable"
+        android:layout_marginTop="30dp"/>
+</LinearLayout>
