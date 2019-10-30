@@ -80,7 +80,7 @@ public class EpgAdapter extends RecyclerView.Adapter<EpgAdapter.HomeListViewHold
         }, (integer, epgEvent) -> {
             //onFocusListener
             onFocusListener.invoke(position, integer, epgChannel, epgEvent);
-            Log.e("epgadapter","program focused "+position+" "+epgEvent.getTitle());
+//            Log.e("epgadapter","program focused "+position+" "+epgEvent.getTitle());
 //            recyclerView.post(()-> checkLastPosition(position));
             is_header_focused = false;
             return null;
