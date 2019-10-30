@@ -353,84 +353,11 @@ public class PreviewChannelActivity extends AppCompatActivity implements  Adapte
         rssHandler.postAtTime(rssTicker, next);
     }
 
-
-//    private void getEpg(){
-//        mHandler.removeCallbacks(mUpdateTimeTask);
-//        try {
-//            String map = MyApp.instance.getIptvclient().getShortEPG(MyApp.user,MyApp.pass,
-//                    mStream_id,4);
-//            Log.e(getClass().getSimpleName(),map);
-//            map=map.replaceAll("[^\\x00-\\x7F]", "");
-//            if (!map.contains("null_error_response")){
-//                JSONObject jsonObject = new JSONObject(map);
-//                JSONArray maps = (JSONArray) jsonObject.get("epg_listings");
-//                epgModelList = new ArrayList<>();
-//                if(maps.length() > 0){
-//                    for(int i = 0;i<maps.length();i++){
-//                        try {
-//                            JSONObject e_p = (JSONObject) maps.get(i);
-//                            EpgModel epgModel = new EpgModel();
-//                            epgModel.setId((String)e_p.get("id"));
-//                            epgModel.setCh_id((String)e_p.get("channel_id"));
-//                            epgModel.setCategory((String)e_p.get("epg_id"));
-//                            epgModel.setT_time((String)e_p.get("start"));
-//                            epgModel.setT_time_to((String)e_p.get("end"));
-//                            byte[] desc_byte = Base64.decode((String)e_p.get("description"), Base64.DEFAULT);
-//                            String desc = new String(desc_byte);
-//                            epgModel.setDescr(desc);
-//                            byte[] title_byte = Base64.decode((String)e_p.get("title"), Base64.DEFAULT);
-//                            String title = new String(title_byte);
-//                            epgModel.setName(title);
-//                            epgModel.setStart_timestamp(e_p.get("start_timestamp").toString());
-//                            epgModel.setStop_timestamp(e_p.get("stop_timestamp").toString());
-//                            int duration = ((Integer.parseInt(e_p.get("stop_timestamp").toString())) - (Integer.parseInt(e_p.get("start_timestamp").toString())));
-//                            epgModel.setDuration(duration);
-//                            if(e_p.has("has_archive")) {
-//                                Double d = Double.parseDouble(e_p.get("has_archive").toString());
-//                                epgModel.setMark_archive(d.intValue());
-//                            }
-//                            epgModelList.add(epgModel);
-//                        }catch (Exception e){
-//                            Log.e("error","epg_parse_error ");
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }
-//                runOnUiThread(()->{
-//                    if(is_full){
-//                        MyApp.is_first = true;
-//                        mHandler.removeCallbacks(mUpdateTimeTask);
-//                        updateProgressBar();
-//                        ly_bottom.setVisibility(View.VISIBLE);
-//                        if(channels.get(sub_pos).getStream_icon()!=null && !channels.get(sub_pos).getStream_icon().isEmpty()){
-//                            Picasso.with(PreviewChannelActivity.this).load(channels.get(sub_pos).getStream_icon())
-//                                    .into(channel_logo);
-//                            channel_logo.setVisibility(View.VISIBLE);
-//                        }else {
-//                            channel_logo.setVisibility(View.GONE);
-//                        }
-//                        listTimer();
-//                    }
-//                    printEpgData();
-//                });
-//            }
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//    }
-//    int epg_time;
-//    int i = 0;
     private void EpgTimer(){
 //        epg_time = 1;
         mEpgTicker = () -> {
             mEpgHandler.removeCallbacks(mEpgTicker);
             showEpg(channels.get(sub_pos));
-//            if (epg_time < 1) {
-//                i++;
-//                Log.e("count", String.valueOf(i));
-////                new Thread(this::getEpg).start();
-//                return;
-//            }
             runNextEpgTicker();
         };
         mEpgTicker.run();
@@ -991,6 +918,7 @@ public class PreviewChannelActivity extends AppCompatActivity implements  Adapte
                         }
                         channel_list.setFocusable(true);
                         MyApp.key = false;
+                        mEpgHandler.removeCallbacks(mEpgTicker);
                         mHandler.removeCallbacks(mUpdateTimeTask);
                         releaseMediaPlayer();
 //                        Log.e("sub",String .valueOf(sub_pos));
@@ -1533,6 +1461,7 @@ public class PreviewChannelActivity extends AppCompatActivity implements  Adapte
     @Override
     protected void onPause() {
         super.onPause();
+        Log.e("pause","pause");
         releaseMediaPlayer();
     }
     @Override
@@ -1570,6 +1499,7 @@ public class PreviewChannelActivity extends AppCompatActivity implements  Adapte
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.e("destroy","destroy");
         SharedPreferences pref = getSharedPreferences("PREF_AUDIO_TRACK", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt("AUDIO_TRACK", 0);
