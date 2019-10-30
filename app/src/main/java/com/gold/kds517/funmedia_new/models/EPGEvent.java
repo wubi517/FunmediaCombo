@@ -211,6 +211,7 @@ public class  EPGEvent implements Serializable {
     }
 
     public int getDuration() {
+        if (duration==0) return (int)(getEndTime().getTime()-getStartTime().getTime())/1000;
         return duration;
     }
 

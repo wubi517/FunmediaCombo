@@ -17,6 +17,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SurfaceView;
 import android.view.View;
@@ -96,7 +97,7 @@ public class GuideActivity extends AppCompatActivity implements AdapterView.OnIt
     boolean  is_create = true,item_sel = false,is_start = false;
     Handler mHandler = new Handler();
     Runnable mTicker;
-    long current_time,startMill,wrongMedialaanTime=0;
+    long current_time,startMill;
     private Map<String, List<EPGEvent>> map;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -301,12 +302,8 @@ public class GuideActivity extends AppCompatActivity implements AdapterView.OnIt
                     surfaceView = null;
                 }
                 surfaceView = findViewById(R.id.surface_view);
-                wrongMedialaanTime = TimeZone.getDefault().getRawOffset() + TimeZone.getDefault().getDSTSavings();
-                try {
-                    startMill = Constants.stampFormat.parse((map.get(date_datas.get(date_pos)).get(selected_num).getT_time())).getTime();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+//                wrongMedialaanTime = TimeZone.getDefault().getRawOffset() + TimeZone.getDefault().getDSTSavings();
+                startMill = map.get(date_datas.get(date_pos)).get(selected_num).getStartTime().getTime();
                 start_time = getFromCatchDate(startMill);
                 duration = map.get(date_datas.get(date_pos)).get(selected_num).getDuration()/60;
                 contentUri = MyApp.instance.getIptvclient().buildCatchupStreamURL(MyApp.user,MyApp.pass,mStream_id,start_time,duration);
@@ -518,12 +515,8 @@ public class GuideActivity extends AppCompatActivity implements AdapterView.OnIt
                             surfaceView = null;
                         }
                         surfaceView = findViewById(R.id.surface_view);
-                        wrongMedialaanTime = TimeZone.getDefault().getRawOffset() + TimeZone.getDefault().getDSTSavings();
-                        try {
-                            startMill = Constants.stampFormat.parse((map.get(date_datas.get(date_pos)).get(selected_num).getT_time())).getTime();
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
+//                        wrongMedialaanTime = TimeZone.getDefault().getRawOffset() + TimeZone.getDefault().getDSTSavings();
+                        startMill = map.get(date_datas.get(date_pos)).get(selected_num).getStartTime().getTime();
                         start_time = getFromCatchDate(startMill);
                         duration = map.get(date_datas.get(date_pos)).get(selected_num).getDuration()/60;
                         contentUri = MyApp.instance.getIptvclient().buildCatchupStreamURL(MyApp.user,MyApp.pass,mStream_id,start_time,duration);
@@ -644,6 +637,7 @@ public class GuideActivity extends AppCompatActivity implements AdapterView.OnIt
     }
 
     private void playVideo(String path) {
+        Log.e("GuideActivity", path);
         releaseMediaPlayer();
         WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
         final DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -811,7 +805,7 @@ public class GuideActivity extends AppCompatActivity implements AdapterView.OnIt
                 if(map.get(date_datas.get(date_pos))!=null && map.get(date_datas.get(date_pos)).size()>0){
                     txt_date.setText(dateFormat.format(new Date()));
                     int pass_min = (int) ((totalDuration - current_time)/(1000*60));
-                    int remain_min = (int)(map.get(date_datas.get(date_pos)).get(selected_num).getDuration()/(60)) - pass_min;
+                    int remain_min = (int)((map.get(date_datas.get(date_pos)).get(selected_num).getEndTime().getTime()-map.get(date_datas.get(date_pos)).get(selected_num).getStartTime().getTime())/60/1000) - pass_min;
                     int progress = pass_min * 100/(pass_min+remain_min);
                     seekbar.setProgress(progress);
                     txt_time_passed.setText("Started " + pass_min +" mins ago");
